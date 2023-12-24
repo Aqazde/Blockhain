@@ -1,5 +1,6 @@
-import encryption.AsymmetricEncryption;
-import encryption.EncryptionUtils;
+import encryption.*;
+import signature.*;
+
 import java.security.KeyPair;
 
 public class Main {
@@ -16,7 +17,20 @@ public class Main {
 
             String decryptedMessage = encryptionUtils.decryptMessage(encryptedMessage, keyPair);
             System.out.println("Decrypted message: " + decryptedMessage);
-        } catch (Exception e) {
+
+            SignatureUtils signatureUtils = new SignatureUtils();
+            KeyPair signatureKeyPair = signatureUtils.generateKeyPair();
+
+            String originalData = "Blockchain";
+            System.out.println("\nOriginal Data: " + originalData);
+
+            byte[] signature = signatureUtils.signData(originalData.getBytes(), signatureKeyPair);
+            System.out.println("Signature: " + new String(signature));
+
+            boolean isSignatureValid = signatureUtils.verifySignature(originalData.getBytes(), signature, signatureKeyPair);
+            System.out.println("Is Signature Valid? " + isSignatureValid);
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
