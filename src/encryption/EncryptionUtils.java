@@ -1,7 +1,7 @@
 package encryption;
 import java.security.KeyPair;
 
-public class EncryptionUtils {
+public class    EncryptionUtils {
     private final AsymmetricEncryption asymmetricEncryption;
     public EncryptionUtils() {
         this.asymmetricEncryption = new AsymmetricEncryption();
