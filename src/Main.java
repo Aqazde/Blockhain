@@ -7,35 +7,36 @@ import transaction.Transaction;
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Example of Asymmetric Encryption
+            Scanner scanner = new Scanner(System.in);
             EncryptionUtils encryptionUtils = new EncryptionUtils();
-            KeyPair keyPair = AsymmetricEncryption.generateKeyPair();
+            SignatureUtils signatureUtils = new SignatureUtils();
 
-            String originalMessage = "Hello, world!";
+            // Example of Asymmetric Encryption
+            System.out.println("Enter your message for encryption:");
+            String originalMessage = scanner.nextLine();
             System.out.println("Original Message: " + originalMessage);
 
+            KeyPair keyPair = AsymmetricEncryption.generateKeyPair();
             byte[] encryptedMessage = encryptionUtils.encryptMessage(originalMessage, keyPair);
             System.out.println("Encrypted message: " + new String(encryptedMessage));
 
-            String decryptedMessage = encryptionUtils.decryptMessage(encryptedMessage, keyPair);
-            System.out.println("Decrypted message: " + decryptedMessage);
-
             // Example of Digital Signature
-            SignatureUtils signatureUtils = new SignatureUtils();
+            System.out.println("\nEnter your data for digital signature:");
+            String originalData = scanner.nextLine();
+            System.out.println("Original Data: " + originalData);
+
             KeyPair signatureKeyPair = signatureUtils.generateKeyPair();
-
-            String originalData = "Blockchain";
-            System.out.println("\nOriginal Data: " + originalData);
-
             byte[] signature = signatureUtils.signData(originalData.getBytes(), signatureKeyPair);
             System.out.println("Signature: " + new String(signature));
 
             boolean isSignatureValid = signatureUtils.verifySignature(originalData.getBytes(), signature, signatureKeyPair);
             System.out.println("Is Signature Valid? " + isSignatureValid);
+
+            scanner.close();
 
             // Example of Proof of Work (PoW) Consensus Mechanism
             int index = 1;
